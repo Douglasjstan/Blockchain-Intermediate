@@ -1,0 +1,155 @@
+<%- include('partials/header') %>
+
+
+<div class="container mt-5">
+  <h1>Your Registration</h1>
+
+  <div class="row">
+    <div class="col-sm-8">
+      <div class="card">
+        <div class="card-body">
+
+          <style>
+            table, th, td {
+              border: 1px solid black;
+              padding: 10px;
+            }
+            table.center{
+              margin-left: auto;
+              margin-right: auto;
+            }
+          </style>
+          <table style="background-color:lightcyan"; width:400px>
+            <tr>
+              <td><label for="NRIC">NRIC</label></td>
+              <td><label for="nric"><b><%=NRIC%></b></label></td>
+              <td>NRIC Name</td>
+              <td><label for="NRIC_NAME" <b><%=NRIC_NAME%></b></label></td>
+            </tr>
+            <tr>
+              <td><label for="Email">Email</label></td>
+              <td><label for="EMAIL" <b><%=EMAIL%></b></label></td>
+              <td><label for="Mobile_number">Mobile Number</label></td>
+              <td><label for="MOBILE" <b><%=MOBILE%></b></label></td>
+            </tr>
+            <tr>
+              <td colspan="4">
+              <p center style="color: red"><%=STATUS%> on <%=TRANSACTION_DATE%></p>
+              </td>
+            </tr>
+          </table>
+
+          <br>
+          <br>
+          <form action="/lenderBorrower" method="POST", name="lenderBorrower">
+            <div class="form-group>">
+              <Table>
+                <tr>
+                  <td colspan="2"><Strong>If you are borrowing : </Strong></td>
+                </tr>
+                <tr>
+                  <td><label for="amount">Amount ($500 to $2000)<br>- Please enter amount you wish to borrow</label></td>
+                  <td><input type="number" max="2000" class="form=control" name="borrow_amount"  value=<%=BORROW_AMOUNT%> autocomplete="off" ></td> 
+                </tr>
+                <tr>
+                  <td><label for="interest">Interest<br>- Chargeable interest depends on current market board rate. <br>- Payment term is monthly.</label></td>
+                  <td><label for="interest"><%=BORROW_INTEREST%>% p.a.</label></td>
+                </tr>
+                <tr>
+                  <td rowspan="2"><label for="payee_account_name">Please enter your bank account name and number.<br>- Monthly deduction will be made from this account for the next 6 months.</label></td>
+                  <td><input type="text" class="form=control" name="borrow_payee_account_name" value="<%=BORROW_ACCOUNT_NAME%>" autocomplete="off" ><h6>Bank Account Name to deduct</h6></td>
+                </tr>
+                <tr>
+                  <td><input type="number" class="form=control" name="borrow_payee_account_number" value=<%=BORROW_ACCOUNT_NUMBER%> autocomplete="off"><h6>Bank Account Number to deduct</h6></td>
+                </tr>
+
+                <tr>
+                  <td colspan="2"><br><br></td>
+                </tr>
+                <tr>
+                  <td colspan="2"><Strong>If you are depositing : </Strong></td>
+                </tr>
+
+                <tr>
+                  <td><label for="amount">Amount<br>- Please enter amount you wish to deposit ($5,000 to $30,000). </label></td>
+                  <td><input type="number" max="30000" class="form=control" name="deposit_amount" value=<%=DEPOSIT_AMOUNT%> autocomplete="off"></td>
+                </tr>
+                <tr>
+                  <td><label for="interest">Interest<br>- Payable interest depends on current market board rate. <br>- Payout term is annually upon maturity.</label></td>
+                  <td><label for="interest"><%=DEPOSIT_INTEREST%>% p.a.</label></td>
+                </tr> 
+                <tr>
+                  <td rowspan="2"><label for="payee_account_name">Please enter your bank account name and number.<br>- Interest amount will be returned to this account upon maturity.</label></td>
+                  <td><input type="text" class="form=control" name="deposit_payee_account_name" value="<%=DEPOSIT_ACCOUNT_NAME%>" autocomplete="off"><h6>Bank Account Name to deposit</h6></td>
+                </tr>
+                <tr>
+                  <td><input type="number" class="form=control" name="deposit_payee_account_number" value=<%=DEPOSIT_ACCOUNT_NUMBER%> autocomplete="off"><h6>Bank Account Number to deposit</h6></td>
+                </tr>
+              </Table>
+              <br>
+              <p style="color: red">Once approved, a copy of the agreement will be send to your email.</p>
+              <br>
+              <button type="submit" class="btn btn-dark" name="nric" value="<%=NRIC%>" onClick="return checkAmount()">Submit</button>
+            </div>  
+          </form>
+
+          <script type="text/javascript">
+            function checkAmount() {
+              var borrow_amount = document.lenderBorrower.borrow_amount.value;
+              var deposit_amount = document.lenderBorrower.deposit_amount.value;
+              if (borrow_amount === "") {
+                borrow_amount = 0;
+              } else {
+                borrow_amount = parseInt(borrow_amount);
+              }
+              alert ("borrow = " + borrow_amount);
+
+              if (deposit_amount === "") {
+                deposit_amount = 0;
+              else {
+                deposit_amount = parseInt(deposit_amount);
+              }
+              alert("deposit = " + deposit_amount);
+
+              }
+              if (borrow_amount > 0 && deposit_amount > 0) {
+                alert("Please select either borrower or depositer");
+                return false;
+              } else if (borrow_amount === 0 && deposit_amount === 0 ) {
+                alert("Please enter amount");
+                return false;
+              } else if (deposit_amount > 0 && borrow_amount > 2000) {
+                alert("Maximum loan allowed is $2,000");
+                return false;
+              } else if (borrow_amount > 0 && borrow_amount < 500) {
+                alert("Minimum loan allowed is $500");
+                return false;
+              } else if (deposit_amount > 0 && deposit_amount < 10000) {
+                alert("Minimum deposit allowed is $10,000");
+                return false;
+              }
+            }
+          </script>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--
+  <fieldset>
+    <legend>If you are borrowing</legend>
+    <Table>
+
+    </Table>
+  </fieldset> 
+  <br>
+  <fieldset>
+    <legend>If you are depositing</legend>
+    <Table>
+
+    </Table>
+  </fieldset> 
+-->
+<%- include('partials/footer') %>

@@ -1,0 +1,96 @@
+<%- include('partials/header') %>
+
+  <div class="container mt-5">
+    <h1>Your Account</h1>
+    <div class="row">
+      <div class="col-sm-8">
+        <div class="card">
+          <div class="card-body">
+
+            <style>
+              table,
+              th,
+              td {
+                border: 1px solid black;
+                padding: 10px;
+              }
+
+              table.center {
+                margin-left: auto;
+                margin-right: auto;
+              }
+            </style>
+            <table style="background-color:lightcyan" ;>
+              <tr>
+                <td><label for="NRIC">NRIC</label></td>
+                <td><label for="nric"><b>
+                      <%=NRIC%>
+                    </b></label></td>
+              </tr>
+              <tr>
+                <td>NRIC Name</td>
+                <td><label for="NRIC_NAME"><b>
+                      <%=NRIC_NAME%>
+                    </b></label></td>
+              </tr>
+              <tr>
+                <td><label for="Email">Email</label></td>
+                <td><label for="EMAIL"><b>
+                      <%=EMAIL%>
+                    </b></label></td>
+              </tr>
+              <tr>
+                <td><label for="Mobile_number">Mobile Number</label></td>
+                <td><label for="MOBILE"><b>
+                      <%=MOBILE%>
+                    </b></label></td>
+              </tr>
+            </table>
+
+            <br>
+            <br>
+
+            <form action="/displayLedger" method="POST">
+              <div class="form-group>">
+                <Table>
+                  <tr>
+                    <th>Account Name</th>
+                    <th>Account Number</th>
+                    <th>Amount</th>
+                    <th>Interest</th>
+                    <th>Status</th>
+                  </tr>
+                  <tr>
+                    <td>
+                      <%=PAYEE_ACCOUNT_NAME%>
+                    </td>
+                    <td>
+                      <%=PAYEE_ACCOUNT_NUMBER%>
+                    </td>
+                    <td>
+                      $<%=AMOUNT%>
+                    </td>
+                    <td>
+                      $<%=INTEREST%>
+                    </td>
+                    <td>
+                      <%=STATUS%> on <%=TRANSACTION_DATE%>
+                    </td>
+                  </tr>
+                </Table>
+                <br>
+                <button type="submit" class="btn btn-dark" name="update" value=<%=NRIC%>>Update Info</button>
+                <%if (STATUS.startsWith("Maturity")) {%>
+                  <button type="submit" class="btn btn-dark" name="withdraw" value=<%=NRIC%>>Withdrawal</button>
+                <%}%>
+                <a class="btn btn-dark" href="/login" role="button">Logout</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <%- include('partials/footer') %>

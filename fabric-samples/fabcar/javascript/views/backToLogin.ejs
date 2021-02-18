@@ -1,0 +1,15 @@
+<%- include('partials/header') %>
+
+<div class="jumbotron centered">
+  <div class="container">
+    <Strong><p style="color: red"><%=STATUS%></p></Strong>
+    <br>
+    <%if (STATUS.startsWith("You have registered")) {%>
+      <a class="btn btn-dark" href="/register" role="button">OK</a>
+    <%} else {%>
+      <a class="btn btn-dark" href="/login" role="button">OK</a>
+    <%}%>
+  </div>
+</div>
+
+<%- include('partials/footer') %>
